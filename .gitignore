@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large video files (keep optimized versions only)
+public/TheConnectionEngine_original.mp4
+public/*_original.mp4
+public/home-bg.mp4
