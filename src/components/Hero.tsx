@@ -63,6 +63,18 @@ export default function Hero() {
     console.error('Background video failed to load:', e)
   }, [])
 
+  // Fallback to set video as loaded after a timeout
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!videoLoaded && !videoError) {
+        console.log('Setting video as loaded via timeout fallback')
+        setVideoLoaded(true)
+      }
+    }, 2000) // 2 second fallback
+
+    return () => clearTimeout(timer)
+  }, [videoLoaded, videoError])
+
   // Temporarily disable mouse tracking to prevent React errors
   // TODO: Re-implement mouse tracking using a different approach
   useEffect(() => {
@@ -83,6 +95,8 @@ export default function Hero() {
             className={`hero-video-bg transition-opacity duration-1000 ${videoLoaded ? 'opacity-30' : 'opacity-0'}`}
             poster="/home-bg.mp4"
             onLoadedData={handleVideoLoad}
+            onCanPlay={handleVideoLoad}
+            onLoadedMetadata={handleVideoLoad}
             onError={handleVideoError}
             loading="lazy"
           >
@@ -180,7 +194,6 @@ export default function Hero() {
                     className="w-full h-full object-cover"
                     controls
                     autoPlay
-                    muted
                     playsInline
                     onEnded={() => setIsVideoPlaying(false)}
                   >

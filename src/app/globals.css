@@ -307,22 +307,14 @@ html {
   height: 100%;
   object-fit: cover;
   z-index: -1;
-  opacity: 0.3;
+  /* opacity controlled by React state via Tailwind classes */
   transition: opacity 0.3s ease;
 }
 
 /* Mobile video optimization */
 @media (max-width: 768px) {
   .hero-video-bg {
-    opacity: 0.2;
     transform: scale(1.1); /* Slight zoom to avoid black bars */
-  }
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .hero-video-bg {
-    opacity: 0.1;
   }
 }
 
