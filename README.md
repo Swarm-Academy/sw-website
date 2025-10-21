@@ -364,6 +364,28 @@ The website now features **dynamic content integration**:
 3. **Advanced Analytics**: Content performance tracking
 4. **Content Scheduling**: Planned content releases
 
+## 🎥 Video Optimization
+
+The website includes optimized video content for optimal performance:
+
+### **Video Files**
+- **TheConnectionEngine.mp4**: 5.1 MB (optimized from 74.8 MB)
+- **Compression**: H.264 codec with CRF 28 for quality/size balance
+- **Web Optimization**: Faststart flag for better streaming
+- **GitHub Compatible**: Under 50MB limit for repository storage
+
+### **Optimization Script**
+Use the included script to optimize future video files:
+```bash
+./scripts/optimize-video.sh input-video.mp4 output-video.mp4
+```
+
+### **Video Features**
+- **Lazy Loading**: Videos load only when needed
+- **Responsive Design**: Optimized for all screen sizes
+- **Fallback Support**: Graceful degradation for unsupported browsers
+- **Performance**: Fast loading with minimal bandwidth usage
+
 ## 🤝 Contributing
 
 1. Fork the repository

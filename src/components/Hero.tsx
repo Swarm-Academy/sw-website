@@ -81,12 +81,12 @@ export default function Hero() {
             playsInline
             preload="metadata"
             className={`hero-video-bg transition-opacity duration-1000 ${videoLoaded ? 'opacity-30' : 'opacity-0'}`}
-            poster="/TheConnectionEngine.mp4"
+            poster="/home-bg.mp4"
             onLoadedData={handleVideoLoad}
             onError={handleVideoError}
             loading="lazy"
           >
-            <source src="/TheConnectionEngine.mp4" type="video/mp4" />
+            <source src="/home-bg.mp4" type="video/mp4" />
             {/* Fallback for browsers that don't support video */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200"></div>
           </video>
