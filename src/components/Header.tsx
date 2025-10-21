@@ -35,7 +35,10 @@ export default function Header() {
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            className={cn(
+              "-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 transition-opacity duration-300",
+              mobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+            )}
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
@@ -76,56 +79,44 @@ export default function Header() {
       {/* Enhanced Mobile menu */}
       <div className={cn("lg:hidden", mobileMenuOpen ? "block animate-fade-in" : "hidden")}>
         <div className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm" />
-        <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white/95 backdrop-blur-sm px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 shadow-2xl animate-slide-in">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
-              <span className="sr-only">Swarm Academy</span>
-              <div className="flex items-center">
-                <img 
-                  src="/swarm-academy-logo.svg" 
-                  alt="Swarm Academy Logo" 
-                  className="h-12 w-auto"
-                />
-              </div>
-            </Link>
+        <div className="fixed inset-0 right-0 z-50 w-full h-screen overflow-y-auto bg-white/95 backdrop-blur-sm px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 shadow-2xl animate-slide-in flex flex-col">
+          <div className="flex items-center justify-end flex-shrink-0 mb-8">
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
               <X className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                {navigation.map((item, index) => {
-                  const Icon = item.icon
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="group flex items-center space-x-3 -mx-3 rounded-lg px-3 py-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 transform hover:scale-105 transition-all duration-300"
-                      onClick={() => setMobileMenuOpen(false)}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      {Icon && <Icon className="h-5 w-5 text-[#fda932] group-hover:text-orange-600 transition-colors duration-300" />}
-                      <span className="group-hover:text-[#fda932] transition-colors duration-300">{item.name}</span>
-                    </Link>
-                  )
-                })}
-              </div>
-              <div className="py-6">
-                <Link
-                  href="/contact"
-                  className="group -mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 transform hover:scale-105 transition-all duration-300 flex items-center space-x-3"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span className="group-hover:text-[#fda932] transition-colors duration-300">Contact</span>
-                  <span className="text-[#fda932] group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all duration-300">→</span>
-                </Link>
-              </div>
+          <div className="flex-1 flex flex-col justify-start pt-8">
+            <div className="space-y-1">
+              {navigation.map((item, index) => {
+                const Icon = item.icon
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="group flex items-center space-x-3 -mx-3 rounded-lg px-3 py-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 transform hover:scale-105 transition-all duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    {Icon && <Icon className="h-5 w-5 text-[#fda932] group-hover:text-orange-600 transition-colors duration-300" />}
+                    <span className="group-hover:text-[#fda932] transition-colors duration-300">{item.name}</span>
+                  </Link>
+                )
+              })}
+            </div>
+            <div className="mt-auto pt-6 border-t border-gray-200">
+              <Link
+                href="/contact"
+                className="group -mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 transform hover:scale-105 transition-all duration-300 flex items-center space-x-3"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="group-hover:text-[#fda932] transition-colors duration-300">Contact</span>
+                <span className="text-[#fda932] group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all duration-300">→</span>
+              </Link>
             </div>
           </div>
         </div>
