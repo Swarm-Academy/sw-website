@@ -9,7 +9,7 @@ import { useBlog } from '@/hooks/useBlog'
 export default function BlogSection() {
   const { data, loading, error } = useBlog()
   
-  const handlePostClick = (post: any) => {
+  const handlePostClick = (post: { link: string }) => {
     window.open(post.link, '_blank')
   }
 

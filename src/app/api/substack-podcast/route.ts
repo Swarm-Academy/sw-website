@@ -28,9 +28,25 @@ async function fetchSubstackEpisodes() {
   }
 }
 
+interface SubstackEpisode {
+  id: string
+  title: string
+  description: string
+  duration: number
+  publishedAt: string
+  audioUrl: string
+  imageUrl: string
+  category: string
+  featured: boolean
+  spotifyUrl: string
+  explicit: boolean
+  language: string
+  source: string
+}
+
 // Simple RSS parser for podcast episodes
 function parseRSSFeed(xmlText: string) {
-  const episodes: any[] = []
+  const episodes: SubstackEpisode[] = []
   
   // Extract items from RSS feed
   const itemRegex = /<item>([\s\S]*?)<\/item>/g

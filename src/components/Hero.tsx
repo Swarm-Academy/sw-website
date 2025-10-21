@@ -1,12 +1,12 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Play, ArrowRight, Users, BookOpen, Mic, Sparkles, Brain, Lightbulb } from 'lucide-react'
+import { Play, ArrowRight, Users, BookOpen, Mic, Sparkles, Brain } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 
 // Animated Counter Hook
-function useAnimatedCounter(end: number, duration: number = 2000) {
+function useAnimatedCounter(end: number) {
   const [count, setCount] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -41,7 +41,6 @@ function useAnimatedCounter(end: number, duration: number = 2000) {
 
 export default function Hero() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoError, setVideoError] = useState(false)
 
@@ -58,7 +57,7 @@ export default function Hero() {
     console.log('Background video loaded successfully')
   }, [])
 
-  const handleVideoError = useCallback((e: any) => {
+  const handleVideoError = useCallback((e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     setVideoError(true)
     console.error('Background video failed to load:', e)
   }, [])
@@ -98,7 +97,6 @@ export default function Hero() {
             onCanPlay={handleVideoLoad}
             onLoadedMetadata={handleVideoLoad}
             onError={handleVideoError}
-            loading="lazy"
           >
             <source src="/home-bg.mp4" type="video/mp4" />
             {/* Fallback for browsers that don't support video */}

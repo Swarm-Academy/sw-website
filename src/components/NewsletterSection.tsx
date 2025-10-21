@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Mail, Check, ArrowRight, Sparkles, Users, Lightbulb } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState('')

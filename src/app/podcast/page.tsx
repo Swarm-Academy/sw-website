@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Play, Clock, Calendar, Download, Share2, ExternalLink } from 'lucide-react'
+import { useState } from 'react'
+import { Play, Clock, Calendar, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { formatDuration, formatDate } from '@/lib/utils'
 import { usePodcast, PodcastEpisode } from '@/hooks/usePodcast'
@@ -63,7 +63,6 @@ export default function PodcastPage() {
   }
 
   const episodes = data.episodes
-  const featuredEpisode = episodes.find(ep => ep.featured) || episodes[0]
   
   // Create categories from episodes
   const categories = [

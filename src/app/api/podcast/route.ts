@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Spotify API configuration
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID
@@ -75,8 +75,24 @@ async function getSubstackEpisodes() {
 }
 
 // Enhanced RSS parser for podcast episodes
+interface PodcastEpisode {
+  id: string
+  title: string
+  description: string
+  duration: number
+  publishedAt: string
+  audioUrl: string
+  imageUrl: string
+  category: string
+  featured: boolean
+  spotifyUrl: string
+  explicit: boolean
+  language: string
+  source: string
+}
+
 function parseRSSFeed(xmlText: string) {
-  const episodes: any[] = []
+  const episodes: PodcastEpisode[] = []
   
   // Extract items from RSS feed
   const itemRegex = /<item>([\s\S]*?)<\/item>/g
@@ -124,7 +140,7 @@ function parseRSSFeed(xmlText: string) {
     ]
     
     let imageUrl = ''
-    let allImages: string[] = []
+    const allImages: string[] = []
     
     // Extract all images from the main content
     for (const pattern of imagePatterns) {
@@ -216,7 +232,19 @@ function parseRSSFeed(xmlText: string) {
 }
 
 // Transform Spotify episode data to our format
-function transformEpisodeData(spotifyEpisode: any, index: number) {
+interface SpotifyEpisode {
+  id: string
+  name: string
+  description?: string
+  duration_ms: number
+  release_date: string
+  external_urls?: { spotify: string }
+  images?: Array<{ url: string }>
+  explicit: boolean
+  language?: string
+}
+
+function transformEpisodeData(spotifyEpisode: SpotifyEpisode, index: number) {
   return {
     id: `spotify-${spotifyEpisode.id}`,
     title: spotifyEpisode.name,
@@ -234,11 +262,11 @@ function transformEpisodeData(spotifyEpisode: any, index: number) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     console.log('Fetching podcast data from multiple sources...')
     
-    const allEpisodes: any[] = []
+    const allEpisodes: PodcastEpisode[] = []
     const sources: string[] = []
     
     // Fetch from Substack
@@ -257,7 +285,7 @@ export async function GET(request: NextRequest) {
       try {
         console.log('Fetching from Spotify...')
         const spotifyData = await getPodcastEpisodes()
-        const spotifyEpisodes = spotifyData.items.map((episode: any, index: number) => 
+        const spotifyEpisodes = spotifyData.items.map((episode: SpotifyEpisode, index: number) => 
           transformEpisodeData(episode, index)
         )
         allEpisodes.push(...spotifyEpisodes)

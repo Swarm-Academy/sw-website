@@ -1,25 +1,14 @@
 'use client'
 
-import { useState } from 'react'
-import { Play, Pause, Volume2, Clock, Calendar, ArrowRight, ExternalLink } from 'lucide-react'
+import { Clock, Calendar, ArrowRight, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { formatDuration, formatDate } from '@/lib/utils'
 import { usePodcast, PodcastEpisode } from '@/hooks/usePodcast'
 import Link from 'next/link'
 
 export default function PodcastSection() {
-  const [currentEpisode, setCurrentEpisode] = useState<string | null>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
   const { data, loading, error } = usePodcast()
 
-  const handlePlayPause = (episodeId: string) => {
-    if (currentEpisode === episodeId) {
-      setIsPlaying(!isPlaying)
-    } else {
-      setCurrentEpisode(episodeId)
-      setIsPlaying(true)
-    }
-  }
 
   const handleEpisodeClick = (episode: PodcastEpisode) => {
     if (episode.source === 'spotify' && episode.spotifyUrl) {
@@ -179,52 +168,6 @@ export default function PodcastSection() {
           </Button>
         </div>
 
-        {/* Enhanced Audio Player - appears when an episode is selected */}
-        {currentEpisode && (
-          <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-orange-50 to-orange-100 border-t-4 border-[#fda932] p-6 shadow-2xl z-50 animate-slide-up">
-            <div className="max-w-7xl mx-auto flex items-center space-x-6">
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#fda932] to-[#fcc530] text-white rounded-full hover:from-[#fd9d31] hover:to-[#fda932] transform hover:scale-110 transition-all duration-300 shadow-2xl"
-              >
-                {isPlaying ? (
-                  <Pause className="w-8 h-8 fill-white" strokeWidth={0} />
-                ) : (
-                  <Play className="w-8 h-8 ml-1 fill-white" strokeWidth={0} />
-                )}
-              </button>
-
-              <div className="flex-1">
-                <h4 className="font-bold text-gray-900 text-xl mb-1">
-                  {episodes.find(ep => ep.id === currentEpisode)?.title}
-                </h4>
-                <p className="text-base text-gray-700 font-medium leading-relaxed">
-                  {episodes.find(ep => ep.id === currentEpisode)?.description}
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => {
-                    const episode = episodes.find(ep => ep.id === currentEpisode)
-                    if (episode) handleEpisodeClick(episode)
-                  }}
-                  className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full border-2 border-gray-200 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-                >
-                  <ExternalLink className="w-5 h-5 text-[#1db954]" strokeWidth={2.5} />
-                  <span className="text-base text-gray-700 font-bold">
-                    {(() => {
-                      const episode = episodes.find(ep => ep.id === currentEpisode)
-                      return episode?.source === 'spotify' ? 'Listen on Spotify' : 
-                             episode?.source === 'substack' ? 'Listen on Substack' : 
-                             'Listen Now'
-                    })()}
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </section>
   )

@@ -161,10 +161,13 @@ export async function GET() {
     }
     
     // Sort posts by publication date (newest first)
-    posts.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    posts.sort((a, b) => {
+      if (!a || !b) return 0
+      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    })
     
     // Mark the newest post as featured
-    if (posts.length > 0) {
+    if (posts.length > 0 && posts[0]) {
       posts[0].featured = true
     }
     
@@ -183,7 +186,7 @@ export async function GET() {
       posts: [],
       total: 0,
       source: 'error',
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 }

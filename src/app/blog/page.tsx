@@ -3,7 +3,6 @@
 import { ArrowRight, Calendar, Clock, User, Search, BookOpen, Star, Award, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { formatDate, generateRandomGradient } from '@/lib/utils'
-import Link from 'next/link'
 import { useBlog } from '@/hooks/useBlog'
 import { useState } from 'react'
 
@@ -35,7 +34,7 @@ export default function BlogPage() {
     }))
   ]
 
-  const handlePostClick = (post: any) => {
+  const handlePostClick = (post: { link: string }) => {
     window.open(post.link, '_blank')
   }
 

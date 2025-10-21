@@ -25,7 +25,7 @@ export default function FloatingParticles({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   
   // Memoize colors to prevent infinite re-renders
-  const memoizedColors = useMemo(() => colors, [colors.join(',')])
+  const memoizedColors = useMemo(() => colors, [colors])
 
   useEffect(() => {
     const updateDimensions = () => {

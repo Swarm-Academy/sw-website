@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BookOpen, Video, FileText, ExternalLink, Search, Filter, Download, Star } from 'lucide-react'
+import { BookOpen, Video, FileText, ExternalLink, Search, Filter, Star } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 const resourceCategories = [
